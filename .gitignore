@@ -1,0 +1,116 @@
+##############################
+## Java
+##############################
+.mtj.tmp/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+# Logs de erro da JVM
+hs_err_pid*
+replay_pid*
+
+##############################
+## Maven
+##############################
+# Diretórios de saída e backups do Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+pom.xml.bak
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+##############################
+## Gradle
+##############################
+# Diretórios de saída do Gradle
+bin/
+build/
+.gradle
+.gradletasknamecache
+gradle-app.setting
+!gradle-wrapper.jar
+
+##############################
+## IntelliJ
+##############################
+# Arquivos de metadados e diretórios de saída
+out/
+.idea/
+.idea_modules/
+*.iml
+*.ipr
+*.iws
+
+##############################
+## Eclipse
+##############################
+# Arquivos de metadados e diretórios de saída
+.settings/
+bin/
+tmp/
+.metadata
+.classpath
+.project
+
+# Arquivos temporários e de sessão do Eclipse
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.loadpath
+.factorypath
+
+##############################
+## NetBeans (CONSOLIDADO)
+##############################
+# Arquivos de configurações e históricos internos (privados)
+**/nbproject/private/
+# Arquivos de propriedades que mudam o tempo todo (seja na raiz ou sub-módulos)
+nbproject/project.properties
+*.project.properties
+# Arquivos de configuração de ação e ambiente
+nbactions.xml
+nb-configuration.xml
+
+# Arquivos e diretórios de compilação/build
+**/build/
+**/dist/
+**/nbbuild/
+**/nbdist/
+**/build.xml
+**/manifest.mf
+
+##############################
+## Visual Studio Code
+##############################
+# Pasta de configurações de workspace local
+.vscode/
+*.code-workspace
+
+##############################
+## OS X
+##############################
+.DS_Store
+
+##############################
+## Miscellaneous
+##############################
+*.log
+# Arquivos de backup genéricos
+*~
+# Todos os outros arquivos .properties que não sejam project.properties
+nbproject/project.properties 
+# Exceção, garantindo que o anterior seja ignorado.
+*.properties
+/nbproject
+*.properties
+
