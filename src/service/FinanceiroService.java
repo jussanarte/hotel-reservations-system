@@ -27,7 +27,8 @@ public class FinanceiroService {
     }
 
     public BigDecimal calcularTotalReserva(Reserva r) {
-        return new BigDecimal(0);
+        BigDecimal totalReserva = r.calcularValorHospedagem();
+        return totalReserva.add(calcularTotalServicos(r));
     }
 
     public BigDecimal calcularSaldo(Reserva r) {

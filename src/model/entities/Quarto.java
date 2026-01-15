@@ -19,7 +19,7 @@ public class Quarto {
     private BigDecimal precoDiarioBase;
     private Integer capacidade;
     private EstadoQuarto estado;
-    private static int value = 0;
+    private static int value = 1;
 
     public Quarto(TipoQuarto tipo, BigDecimal precoDiarioBase, Integer capacidade) {
         this.numero = value++;
@@ -28,7 +28,7 @@ public class Quarto {
         this.capacidade = capacidade;
         this.estado = EstadoQuarto.ATIVO;
     }
-    
+
     public Integer getNumero() {
         return numero;
     }
@@ -65,10 +65,6 @@ public class Quarto {
         this.capacidade = capacidade;
     }
 
-    public void setEstado(EstadoQuarto estado) {
-        this.estado = estado;
-    }
-
     public void ativarQuarto() {
         this.estado = EstadoQuarto.ATIVO;
     }
@@ -80,7 +76,6 @@ public class Quarto {
     public void repararQuarto() {
         this.estado = EstadoQuarto.MANUNTENCAO;
     }
-
 
     @Override
     public String toString() {

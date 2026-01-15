@@ -6,6 +6,7 @@ package model.entities;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import model.enums.EstadoPagamento;
 import model.enums.MetodoPagamento;
 
@@ -25,6 +26,13 @@ public class Pagamento {
         this.dataPagamento = dataPagamento;
         this.metodo = metodo;
         this.estado = EstadoPagamento.PENDENTE;
+    }
+    
+    public Pagamento(BigDecimal valorPago, LocalDateTime dataPagamento, MetodoPagamento metodo, EstadoPagamento estado) {
+        this.valorPago = valorPago;
+        this.dataPagamento = dataPagamento;
+        this.metodo = metodo;
+        this.estado = estado;
     }
     
     //GETTERS
@@ -60,7 +68,13 @@ public class Pagamento {
     public void setEstado(EstadoPagamento estado) {
         this.estado = estado;
     }
-   
-  
+
+    @Override
+    public String toString() {
+        return String.format("- %s %.2f Kz [%s]",
+                dataPagamento.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")), valorPago, metodo);
+    }
+    
+    
     
 }

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model.entities;
 
 import java.math.BigDecimal;
@@ -77,23 +73,23 @@ public class ServicoAdicional {
 
     //FUNCOES
     public BigDecimal calcularTotal(long noitesDaReserva) {
-        if (null == this.formaDeCobranca) { // Caso seja FIXO
-            return this.precoUnitario;
-        } else {
-            return switch (this.formaDeCobranca) {
-                case POR_NOITE ->
-                    this.precoUnitario.multiply(BigDecimal.valueOf(noitesDaReserva));
-                case POR_UNIDADE ->
-                    this.precoUnitario.multiply(BigDecimal.valueOf(this.quantidade));
-                default ->
-                    this.precoUnitario;
-            };
-        }
+        return this.formaDeCobranca.calcular(precoUnitario, this.quantidade, noitesDaReserva);
     }
 
     @Override
     public String toString() {
-        return String.format("- %s (%s): %,.2f Kz x %d unidades",
-                descricao, tipoDeServico, precoUnitario, quantidade);
+        String detalheCobranca = switch (formaDeCobranca) {
+            case POR_NOITE ->
+                String.format("(Preco por noite: %.2f Kz)", precoUnitario);
+            case POR_UNIDADE ->
+                String.format("(Preco unitario: %.2f Kz x %d qtd)", precoUnitario, quantidade);
+            case FIXO ->
+                String.format("(Taxa fixa: %.2f Kz)", precoUnitario);
+            default ->
+                String.format("(%.2f Kz)", precoUnitario);
+        };
+
+        return String.format("- %s [%s] %s",
+                descricao, tipoDeServico, detalheCobranca);
     }
 }
