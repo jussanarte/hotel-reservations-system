@@ -1,5 +1,6 @@
 package model.entities;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import model.enums.FormaCobranca;
 import static model.enums.FormaCobranca.POR_NOITE;
@@ -10,7 +11,7 @@ import model.enums.TipoServico;
  *
  * @author juuhl
  */
-public class ServicoAdicional {
+public class ServicoAdicional implements Serializable {
 
     private String descricao;
     private TipoServico tipoDeServico;

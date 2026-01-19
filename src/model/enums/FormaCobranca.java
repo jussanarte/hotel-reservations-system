@@ -27,7 +27,7 @@ public enum FormaCobranca implements ICalculadoraServico{
     POR_UNIDADE{
         @Override
         public BigDecimal calcular(BigDecimal precoUnitario, int qtd, long noites) {
-            return precoUnitario.multiply(BigDecimal.valueOf(qtd)); // [cite: 100]
+            return precoUnitario.multiply(BigDecimal.valueOf(qtd));
         }
     };
     

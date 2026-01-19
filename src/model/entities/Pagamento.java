@@ -4,8 +4,9 @@
  */
 package model.entities;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import model.enums.EstadoPagamento;
 import model.enums.MetodoPagamento;
@@ -14,21 +15,21 @@ import model.enums.MetodoPagamento;
  *
  * @author juuhl
  */
-public class Pagamento {
+public class Pagamento implements Serializable {
 
     private BigDecimal valorPago;
-    private LocalDateTime dataPagamento;
+    private LocalDate dataPagamento;
     private MetodoPagamento metodo;
     private EstadoPagamento estado;
 
-    public Pagamento(BigDecimal valorPago, LocalDateTime dataPagamento, MetodoPagamento metodo) {
+    public Pagamento(BigDecimal valorPago, LocalDate dataPagamento, MetodoPagamento metodo) {
         this.valorPago = valorPago;
         this.dataPagamento = dataPagamento;
         this.metodo = metodo;
         this.estado = EstadoPagamento.PENDENTE;
     }
     
-    public Pagamento(BigDecimal valorPago, LocalDateTime dataPagamento, MetodoPagamento metodo, EstadoPagamento estado) {
+    public Pagamento(BigDecimal valorPago, LocalDate dataPagamento, MetodoPagamento metodo, EstadoPagamento estado) {
         this.valorPago = valorPago;
         this.dataPagamento = dataPagamento;
         this.metodo = metodo;
@@ -40,7 +41,7 @@ public class Pagamento {
         return valorPago;
     }
 
-    public LocalDateTime getDataPagamento() {
+    public LocalDate getDataPagamento() {
         return dataPagamento;
     }
 
@@ -57,7 +58,7 @@ public class Pagamento {
         this.valorPago = valorPago;
     }
 
-    public void setDataPagamento(LocalDateTime dataPagamento) {
+    public void setDataPagamento(LocalDate dataPagamento) {
         this.dataPagamento = dataPagamento;
     }
 
@@ -72,7 +73,7 @@ public class Pagamento {
     @Override
     public String toString() {
         return String.format("- %s %.2f Kz [%s]",
-                dataPagamento.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")), valorPago, metodo);
+                dataPagamento.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), valorPago, metodo);
     }
     
     

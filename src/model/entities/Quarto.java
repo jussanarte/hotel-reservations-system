@@ -4,6 +4,7 @@
  */
 package model.entities;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import model.enums.EstadoQuarto;
 import model.enums.TipoQuarto;
@@ -12,17 +13,17 @@ import model.enums.TipoQuarto;
  *
  * @author juuhl
  */
-public class Quarto {
+public class Quarto implements Serializable {
 
     private Integer numero;
     private TipoQuarto tipo;
     private BigDecimal precoDiarioBase;
     private Integer capacidade;
     private EstadoQuarto estado;
-    private static int value = 1;
+    private static int contador = 1;
 
     public Quarto(TipoQuarto tipo, BigDecimal precoDiarioBase, Integer capacidade) {
-        this.numero = value++;
+        this.numero = contador++;
         this.tipo = tipo;
         this.precoDiarioBase = precoDiarioBase;
         this.capacidade = capacidade;
@@ -76,10 +77,14 @@ public class Quarto {
     public void repararQuarto() {
         this.estado = EstadoQuarto.MANUNTENCAO;
     }
+    
+    public static void sincronizarContador(int novoValor) {
+        contador = novoValor;
+    }
 
     @Override
     public String toString() {
-        return String.format("Quarto %d (%s) - Preço Base: %,.2f Kz | Cap: %d pessoas [%s]",
+        return String.format("Quarto %d (%s) - Preco Base: %,.2f Kz | Capacidade Maxima: %d pessoas [%s]",
                 numero, tipo, precoDiarioBase, capacidade, estado);
     }
 

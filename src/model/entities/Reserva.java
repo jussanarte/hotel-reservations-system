@@ -5,7 +5,9 @@
 package model.entities;
 
 import exceptions.DomainException;
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -18,11 +20,11 @@ import model.enums.EstadoReserva;
  *
  * @author juuhl
  */
-public class Reserva {
+public class Reserva implements Serializable {
 
     private Integer codReserva;
-    private LocalDateTime checkIn;
-    private LocalDateTime checkOut;
+    private LocalDate checkIn;
+    private LocalDate checkOut;
     private Integer qtdHospedes;
     private LocalDateTime dataCriacao;
     private Cliente cliente;
@@ -30,11 +32,11 @@ public class Reserva {
     private EstadoReserva estado;
     private List<Pagamento> pagamentos;
     private List<ServicoAdicional> servicosAdicionais;
-    private static DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-    private static int value = 1;
+    private static DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static int contador = 1;
 
-    public Reserva(LocalDateTime checkIn, LocalDateTime checkOut, Integer qtdHospedes, Quarto quarto) {
-        this.codReserva = value++;
+    public Reserva(LocalDate checkIn, LocalDate checkOut, Integer qtdHospedes, Quarto quarto) {
+        this.codReserva = contador++;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
         this.qtdHospedes = qtdHospedes;
@@ -50,11 +52,11 @@ public class Reserva {
         return codReserva;
     }
 
-    public LocalDateTime getCheckIn() {
+    public LocalDate getCheckIn() {
         return checkIn;
     }
 
-    public LocalDateTime getCheckOut() {
+    public LocalDate getCheckOut() {
         return checkOut;
     }
 
@@ -95,11 +97,11 @@ public class Reserva {
     }
 
     //SETTERS
-    public void setCheckIn(LocalDateTime checkIn) {
+    public void setCheckIn(LocalDate checkIn) {
         this.checkIn = checkIn;
     }
 
-    public void setCheckOut(LocalDateTime checkOut) {
+    public void setCheckOut(LocalDate checkOut) {
         this.checkOut = checkOut;
     }
 
@@ -130,8 +132,9 @@ public class Reserva {
     }
 
     //FUNCOES
+    
     public void validar() {
-        if ((this.checkOut.toLocalDate().isBefore(this.checkIn.toLocalDate())) || (this.checkOut.toLocalDate().isEqual(this.checkIn.toLocalDate()))) {
+        if ((this.checkOut.isBefore(this.checkIn)) || (this.checkOut.isEqual(this.checkIn))) {
             throw new DomainException("Check-out deve ser maior que Check-in.");
         }
         if (this.qtdHospedes > quarto.getCapacidade()) {
@@ -147,6 +150,10 @@ public class Reserva {
         return precoBase.multiply(BigDecimal.valueOf(noites)).multiply(multiplicador);
     }
 
+    public static void sincronizarContador(int novoValor){
+        contador = novoValor;
+    }
+    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

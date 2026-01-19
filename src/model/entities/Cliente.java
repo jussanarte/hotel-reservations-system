@@ -4,11 +4,14 @@
  */
 package model.entities;
 
+import java.io.Serializable;
+import service.Validador;
+
 /**
  *
  * @author juuhl
  */
-public class Cliente {
+public class Cliente implements Serializable {
 
     private Integer id;
     private String nomeCompleto;
@@ -17,14 +20,23 @@ public class Cliente {
     private String documento;
 
     public Cliente(String nomeCompleto, String documento) {
-        this.nomeCompleto = nomeCompleto;
+        if(Validador.validarNome(nomeCompleto)){
+            this.nomeCompleto = nomeCompleto;
+        }
+        
         this.documento = documento;
     }
 
     public Cliente(String nomeCompleto, String telefone, String email, String documento) {
-        this.nomeCompleto = nomeCompleto;
-        this.telefone = telefone;
-        this.email = email;
+       if(Validador.validarNome(nomeCompleto)){
+            this.nomeCompleto = nomeCompleto;
+        }
+        if(Validador.validarTelemovel(telefone)){
+             this.telefone = telefone;
+        }
+        if(Validador.validarEmail(email)){
+            this.email = email;
+        }
         this.documento = documento;
     }
 

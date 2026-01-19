@@ -6,7 +6,7 @@ package service;
 
 import exceptions.DomainException;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import model.entities.*;
 import model.enums.*;
@@ -16,12 +16,13 @@ import model.enums.*;
  * @author juuhl
  */
 public class ReservaService {
+   
+    private FinanceiroService fs = new FinanceiroService();
 
-    FinanceiroService fs = new FinanceiroService();
-
-    public void confirmarReserva(Reserva r) {
-
+    public void confirmarReserva(Reserva r, List<Reserva> reservasConfirmadasExistentes) {
         r.validar();
+        
+        boolean haSobreposicao = verificarSobreposicaoDatas(r, reservasConfirmadasExistentes);
 
         boolean quartoIndisponivel = r.getQuarto().getEstado() != EstadoQuarto.ATIVO;
 
@@ -29,10 +30,14 @@ public class ReservaService {
         boolean saldoPositivo = saldo.compareTo(BigDecimal.ZERO) > 0;
 
         if (quartoIndisponivel || saldoPositivo) {
-            throw new DomainException("Reserva nao confirmada.");
+            throw new DomainException("Reserva #" + r.getCodReserva() + " nao confirmada por quarto indisponivel ou saldo maior que 0");
+        }
+        if(haSobreposicao){
+             throw new DomainException("Reserva #" + r.getCodReserva() + " sobrepoe outra reserva existente");
         }
 
         r.setEstado(EstadoReserva.CONFIRMADA);
+        reservasConfirmadasExistentes.add(r);
         System.out.println("Reserva #" + r.getCodReserva() + " confirmada para o cliente " + r.getCliente().getNomeCompleto());
     }
 
@@ -45,7 +50,7 @@ public class ReservaService {
     }
 
     public void realizarCheckIn(Reserva r) {
-        if (!LocalDateTime.now().toLocalDate().isEqual(r.getCheckIn().toLocalDate())) {
+        if (!LocalDate.now().isEqual(r.getCheckIn())) {
             throw new DomainException("Nao foi possivel fazer check-in.");
         }
 
@@ -62,11 +67,11 @@ public class ReservaService {
         if (r.getEstado() != EstadoReserva.CHECKED_IN) {
             throw new DomainException("So pode fazer check-out apos fazer check-in");
         }
-        
-        if (!LocalDateTime.now().toLocalDate().isEqual(r.getCheckOut().toLocalDate())) {
+
+        if (!LocalDate.now().isEqual(r.getCheckOut())) {
             throw new DomainException("Nao foi possivel fazer check-out.");
         }
-        
+
         r.setEstado(EstadoReserva.CHECKED_OUT);
         r.getQuarto().repararQuarto();
         System.out.println("Check-out realizado. Quarto " + r.getQuarto().getNumero() + " liberado.");
@@ -80,7 +85,27 @@ public class ReservaService {
         r.adicionarServico(s);
     }
 
-    public void verificarSobreposicaoDatas(Reserva r, List<Reserva> reservasExistentes) {
+    public boolean verificarSobreposicaoDatas(Reserva r, List<Reserva> reservasConfirmadasExistentes) {
+        boolean sobreposto = false;
+        for (Reserva a : reservasConfirmadasExistentes) {
+            if (a.getEstado() == EstadoReserva.CONFIRMADA
+                    || a.getEstado() == EstadoReserva.CHECKED_IN) {
 
+                if (a.getQuarto().getNumero().equals(r.getQuarto().getNumero())) {
+
+                    sobreposto = a.getCheckIn().isBefore(r.getCheckOut()) && r.getCheckIn().isBefore(a.getCheckOut());
+
+                    if (sobreposto) {
+                        throw new DomainException(
+                                "Conflito de datas: o quarto " + r.getQuarto().getNumero()
+                                + " ja possui uma reserva confirmada entre "
+                                + a.getCheckIn() + " e "
+                                + a.getCheckOut()
+                        );
+                    }
+                }
+            }
+        }
+        return sobreposto;
     }
 }
