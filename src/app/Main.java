@@ -8,7 +8,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -35,16 +34,11 @@ public class Main {
         final String fileNameCliente = "clientes.txt";
         final String fileNameQuarto = "quartos.txt";
         final String fileNameReserva = "reservas.txt";
-        final String fileNamePagamento = "pagamentos.txt";
-        final String fileNameServicoAdicional = "servicosAdicionais.txt";
 
         //CARREGAMENTO DOS DADOS ANTERIORES
         List<Reserva> reservas = SerializacaoService.carregarFicheiros(fileNameReserva);
         List<Cliente> clientes = SerializacaoService.carregarFicheiros(fileNameCliente);
         List<Quarto> quartos = SerializacaoService.carregarFicheiros(fileNameQuarto);
-
-        List<ServicoAdicional> servicosAdicionais = SerializacaoService.carregarFicheiros(fileNameServicoAdicional);
-        List<Pagamento> pagamentos = SerializacaoService.carregarFicheiros(fileNamePagamento);
 
         if (!quartos.isEmpty()) {
             int maiorId = 0;
@@ -148,9 +142,6 @@ public class Main {
                     rservice.cancelarReserva(reservaP);
 
                     SerializacaoService.gravar(fileNameReserva, reservas);
-                    SerializacaoService.gravar(fileNameServicoAdicional, servicosAdicionais);
-                    SerializacaoService.gravar(fileNamePagamento, pagamentos);
-
                     System.out.println();
                 }
                 case 3 -> {
@@ -186,13 +177,9 @@ public class Main {
 
                         rservice.adicionarServico(reservaP, new ServicoAdicional(descricao, tipoS, precoS, quantidade, formaCobranca));
 
-                        for (int i = 0; i < reservaP.getServicosAdicionais().size(); i++) {
-                            servicosAdicionais.add(reservaP.getServicosAdicionais().get(i));
-                        }
+                       
 
                     }
-
-                    service.SerializacaoService.gravar(fileNameServicoAdicional, servicosAdicionais);
                     service.SerializacaoService.gravar(fileNameReserva, reservas);
                 }
                 case 4 -> {
@@ -229,13 +216,7 @@ public class Main {
 
                         System.out.println("Saldo: " + fs.calcularSaldo(reservaP));
 
-                        for (int i = 0; i < reservaP.getPagamentos().size(); i++) {
-                            pagamentos.add(reservaP.getPagamentos().get(i));
-                        }
-
                     }
-
-                    SerializacaoService.gravar(fileNamePagamento, pagamentos);
                     SerializacaoService.gravar(fileNameReserva, reservas);
 
                     System.out.println("");
@@ -246,23 +227,14 @@ public class Main {
                         System.out.println(l);
                     }
 
-                    System.out.println("== Arquivo Pagamentos ==");
-                    for (Pagamento p : pagamentos) {
-                        System.out.println(p);
-                    }
-
                     System.out.println("== Arquivo Quartos ==");
                     for (Quarto q : quartos) {
                         System.out.println(q);
                     }
-
+                    
+                     System.out.println("== Arquivo Reservas ==");
                     for (Reserva r : reservas) {
                         System.out.println(r);
-                    }
-
-                    System.out.println("== Arquivo Servicos Adicionais ==");
-                    for (ServicoAdicional s : servicosAdicionais) {
-                        System.out.println(s);
                     }
 
                 }

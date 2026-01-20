@@ -26,7 +26,7 @@ public class Pagamento implements Serializable {
         this.valorPago = valorPago;
         this.dataPagamento = dataPagamento;
         this.metodo = metodo;
-        this.estado = EstadoPagamento.PENDENTE;
+        this.estado = EstadoPagamento.CONFIRMADO;
     }
     
     public Pagamento(BigDecimal valorPago, LocalDate dataPagamento, MetodoPagamento metodo, EstadoPagamento estado) {

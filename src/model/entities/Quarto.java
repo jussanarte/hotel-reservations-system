@@ -84,7 +84,7 @@ public class Quarto implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("Quarto %d (%s) - Preco Base: %,.2f Kz | Capacidade Maxima: %d pessoas [%s]",
+        return String.format("Quarto %d (%s) - Preco Base: %.2f Kz | Capacidade Maxima: %d pessoas [%s]",
                 numero, tipo, precoDiarioBase, capacidade, estado);
     }
 
