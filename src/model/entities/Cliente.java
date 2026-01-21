@@ -5,7 +5,7 @@
 package model.entities;
 
 import java.io.Serializable;
-import service.Validador;
+import utils.Validador;
 
 /**
  *
@@ -20,24 +20,27 @@ public class Cliente implements Serializable {
     private String documento;
 
     public Cliente(String nomeCompleto, String documento) {
-        if(Validador.validarNome(nomeCompleto)){
+        if (Validador.validarNome(nomeCompleto)) {
             this.nomeCompleto = nomeCompleto;
         }
-        
-        this.documento = documento;
+        if (Validador.validarDocumento(documento)) {
+            this.documento = documento;
+        }
     }
 
     public Cliente(String nomeCompleto, String telefone, String email, String documento) {
-       if(Validador.validarNome(nomeCompleto)){
+        if (Validador.validarNome(nomeCompleto)) {
             this.nomeCompleto = nomeCompleto;
         }
-        if(Validador.validarTelemovel(telefone)){
-             this.telefone = telefone;
+        if (Validador.validarTelemovel(telefone)) {
+            this.telefone = telefone;
         }
-        if(Validador.validarEmail(email)){
+        if (Validador.validarEmail(email)) {
             this.email = email;
         }
-        this.documento = documento;
+        if (Validador.validarDocumento(documento)) {
+            this.documento = documento;
+        }
     }
 
     public Cliente() {
@@ -79,7 +82,7 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("Cliente: %s [Doc: %s]", nomeCompleto, documento);
+        return String.format("Nome: %s [Documento: %s]", nomeCompleto, documento);
     }
 
 }

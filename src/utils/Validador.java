@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package service;
+package utils;
 
 /**
  *
@@ -22,11 +22,9 @@ public class Validador {
         return email != null && email.matches("^[\\w.-]+@[\\w.-]+\\.[a-z]{2,3}$");
     }
     
-    public static boolean validarBI(String bi) {
-        return bi != null && bi.matches("^[0-9]{9}[A-Z]{2}[0-9]{3}$");
+    public static boolean validarDocumento(String documento) {
+        return documento != null && (documento.matches("^[0-9]{9}[A-Z]{2}[0-9]{3}$") || documento.matches("^[A-Z]{1,2}[0-9]{6,9}$"));
     }
+
     
-    public static boolean validarPassaporte(String passaporte) {
-        return passaporte != null && passaporte.matches("^[A-Z]{1,2}[0-9]{6,9}$");
-    }
 }

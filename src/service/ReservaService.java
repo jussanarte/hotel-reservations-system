@@ -16,14 +16,13 @@ import model.enums.*;
  * @author juuhl
  */
 public class ReservaService {
-   
+
     private FinanceiroService fs = new FinanceiroService();
 
     public void confirmarReserva(Reserva r, List<Reserva> reservasConfirmadasExistentes) {
         r.validar();
-        
-        boolean haSobreposicao = verificarSobreposicaoDatas(r, reservasConfirmadasExistentes);
 
+        boolean haSobreposicao = verificarSobreposicaoDatas(r, reservasConfirmadasExistentes);
         boolean quartoIndisponivel = r.getQuarto().getEstado() != EstadoQuarto.ATIVO;
 
         BigDecimal saldo = fs.calcularSaldo(r);
@@ -32,8 +31,8 @@ public class ReservaService {
         if (quartoIndisponivel || saldoPositivo) {
             throw new DomainException("Reserva #" + r.getCodReserva() + " nao confirmada por quarto indisponivel ou saldo maior que 0");
         }
-        if(haSobreposicao){
-             throw new DomainException("Reserva #" + r.getCodReserva() + " sobrepoe outra reserva existente");
+        if (haSobreposicao) {
+            throw new DomainException("Reserva #" + r.getCodReserva() + " sobrepoe outra reserva existente");
         }
 
         r.setEstado(EstadoReserva.CONFIRMADA);
@@ -78,23 +77,25 @@ public class ReservaService {
     }
 
     public void processarPagamento(Reserva r, Pagamento p) {
+        if (r.getEstado() == EstadoReserva.CANCELADA) {
+            throw new DomainException("Nao e possivel adicionar pagamentos a uma reserva cancelada!");
+        }
         r.adicionarPagamento(p);
     }
 
     public void adicionarServico(Reserva r, ServicoAdicional s) {
+        if (r.getEstado() == EstadoReserva.CANCELADA) {
+            throw new DomainException("Nao e possivel adicionar servicos adicionais a uma reserva cancelada!");
+        }
         r.adicionarServico(s);
     }
 
     public boolean verificarSobreposicaoDatas(Reserva r, List<Reserva> reservasConfirmadasExistentes) {
         boolean sobreposto = false;
         for (Reserva a : reservasConfirmadasExistentes) {
-            if (a.getEstado() == EstadoReserva.CONFIRMADA
-                    || a.getEstado() == EstadoReserva.CHECKED_IN) {
-
+            if (a.getEstado() == EstadoReserva.CONFIRMADA || a.getEstado() == EstadoReserva.CHECKED_IN) {
                 if (a.getQuarto().getNumero().equals(r.getQuarto().getNumero())) {
-
                     sobreposto = a.getCheckIn().isBefore(r.getCheckOut()) && r.getCheckIn().isBefore(a.getCheckOut());
-
                     if (sobreposto) {
                         throw new DomainException(
                                 "Conflito de datas: o quarto " + r.getQuarto().getNumero()

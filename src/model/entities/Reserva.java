@@ -35,7 +35,7 @@ public class Reserva implements Serializable {
     private static DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static int contador = 1;
 
-    public Reserva(LocalDate checkIn, LocalDate checkOut, Integer qtdHospedes, Quarto quarto) {
+    public Reserva(LocalDate checkIn, LocalDate checkOut, Integer qtdHospedes, Quarto quarto, Cliente cliente) {
         this.codReserva = contador++;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
@@ -45,6 +45,7 @@ public class Reserva implements Serializable {
         this.pagamentos = new ArrayList<>();
         this.servicosAdicionais = new ArrayList<>();
         this.estado = EstadoReserva.CRIADA;
+        this.cliente = cliente;
     }
 
     //GETTERS
