@@ -20,8 +20,7 @@ public class ReservaService {
     private FinanceiroService fs = new FinanceiroService();
 
     public void confirmarReserva(Reserva r, List<Reserva> reservasConfirmadasExistentes) {
-        r.validar();
-
+        
         boolean haSobreposicao = verificarSobreposicaoDatas(r, reservasConfirmadasExistentes);
         boolean quartoIndisponivel = r.getQuarto().getEstado() != EstadoQuarto.ATIVO;
 

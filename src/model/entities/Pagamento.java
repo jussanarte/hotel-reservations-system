@@ -4,6 +4,7 @@
  */
 package model.entities;
 
+import exceptions.DomainException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -24,18 +25,23 @@ public class Pagamento implements Serializable {
 
     public Pagamento(BigDecimal valorPago, LocalDate dataPagamento, MetodoPagamento metodo) {
         this.valorPago = valorPago;
-        this.dataPagamento = dataPagamento;
+        if (dataPagamento.getYear() < LocalDate.now().getYear()) {
+            throw new DomainException("O pagamento deve ser feito a partir do ano atual.");
+        } else {
+            this.dataPagamento = dataPagamento;
+        }
+
         this.metodo = metodo;
         this.estado = EstadoPagamento.CONFIRMADO;
     }
-    
+
     public Pagamento(BigDecimal valorPago, LocalDate dataPagamento, MetodoPagamento metodo, EstadoPagamento estado) {
         this.valorPago = valorPago;
         this.dataPagamento = dataPagamento;
         this.metodo = metodo;
         this.estado = estado;
     }
-    
+
     //GETTERS
     public BigDecimal getValorPago() {
         return valorPago;
@@ -58,16 +64,16 @@ public class Pagamento implements Serializable {
         this.valorPago = valorPago;
     }
 
-    public void setDataPagamento(LocalDate dataPagamento) {
-        this.dataPagamento = dataPagamento;
-    }
-
     public void setMetodo(MetodoPagamento metodo) {
         this.metodo = metodo;
     }
 
-    public void setEstado(EstadoPagamento estado) {
-        this.estado = estado;
+    public void confirmarPagamento() {
+        estado = EstadoPagamento.CONFIRMADO;
+    }
+
+    public void estornarPagamento() {
+        estado = EstadoPagamento.ESTORNADO;
     }
 
     @Override
@@ -75,7 +81,5 @@ public class Pagamento implements Serializable {
         return String.format("- %s %.2f Kz [%s]",
                 dataPagamento.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), valorPago, metodo);
     }
-    
-    
-    
+
 }

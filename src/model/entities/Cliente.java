@@ -4,6 +4,7 @@
  */
 package model.entities;
 
+import exceptions.DomainException;
 import java.io.Serializable;
 import utils.Validador;
 
@@ -22,9 +23,13 @@ public class Cliente implements Serializable {
     public Cliente(String nomeCompleto, String documento) {
         if (Validador.validarNome(nomeCompleto)) {
             this.nomeCompleto = nomeCompleto;
+        }else{
+            throw new DomainException("Nome Invalido!");
         }
         if (Validador.validarDocumento(documento)) {
             this.documento = documento;
+        }else{
+             throw new DomainException("Documento Invalido!");
         }
     }
 
@@ -82,7 +87,7 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("Nome: %s [Documento: %s]", nomeCompleto, documento);
+        return String.format("%s [Documento: %s]", nomeCompleto, documento);
     }
 
 }

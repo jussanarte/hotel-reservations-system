@@ -4,6 +4,7 @@
  */
 package model.entities;
 
+import exceptions.DomainException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import model.enums.EstadoQuarto;
@@ -25,8 +26,18 @@ public class Quarto implements Serializable {
     public Quarto(TipoQuarto tipo, BigDecimal precoDiarioBase, Integer capacidade) {
         this.numero = contador++;
         this.tipo = tipo;
-        this.precoDiarioBase = precoDiarioBase;
-        this.capacidade = capacidade;
+        if (precoDiarioBase.compareTo(BigDecimal.ZERO) == -1) {
+            throw new DomainException("Preco nao pode ser negativo.");
+        } else {
+            this.precoDiarioBase = precoDiarioBase;
+        }
+
+        if (capacidade <= 0) {
+            throw new DomainException("Capacidade nao pode ser negativa.");
+        } else {
+            this.capacidade = capacidade;
+        }
+
         this.estado = EstadoQuarto.ATIVO;
     }
 
@@ -77,7 +88,7 @@ public class Quarto implements Serializable {
     public void repararQuarto() {
         this.estado = EstadoQuarto.MANUNTENCAO;
     }
-    
+
     public static void sincronizarContador(int novoValor) {
         contador = novoValor;
     }

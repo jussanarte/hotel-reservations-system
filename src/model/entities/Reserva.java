@@ -120,25 +120,21 @@ public class Reserva implements Serializable {
 
     public void adicionarPagamento(Pagamento p) {
         if (p == null) {
-           throw new DomainException("Pagamento nao pode ser estar vazio.");
+            throw new DomainException("Pagamento nao pode ser estar vazio.");
         }
-         this.pagamentos.add(p);
+        this.pagamentos.add(p);
     }
 
     public void adicionarServico(ServicoAdicional s) {
         if (s == null) {
-           throw new DomainException("Servico nao pode ser estar vazio.");
+            throw new DomainException("Servico nao pode ser estar vazio.");
         }
         this.servicosAdicionais.add(s);
     }
 
     //FUNCOES
-    
-    public void validar() {
-        if ((this.checkOut.isBefore(this.checkIn)) || (this.checkOut.isEqual(this.checkIn))) {
-            throw new DomainException("Check-out deve ser maior que Check-in.");
-        }
-        if (this.qtdHospedes > quarto.getCapacidade()) {
+    public void validarCapacidade() {
+        if (this.qtdHospedes > quarto.getCapacidade() || qtdHospedes <0) {
             throw new DomainException("Reserva rejeitada por exceder capacidade.");
         }
     }
@@ -151,10 +147,10 @@ public class Reserva implements Serializable {
         return precoBase.multiply(BigDecimal.valueOf(noites)).multiply(multiplicador);
     }
 
-    public static void sincronizarContador(int novoValor){
+    public static void sincronizarContador(int novoValor) {
         contador = novoValor;
     }
-    
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -164,28 +160,27 @@ public class Reserva implements Serializable {
         sb.append(String.format("Periodo: %s ate %s (%d noites)\n",
                 checkIn.format(fmt), checkOut.format(fmt), getNoites()));
         sb.append(String.format("Acomodacao: Quarto %d\n", quarto.getNumero()));
+        sb.append(String.format("Quantidade de Hospedes: %s\n", qtdHospedes));
         sb.append(String.format("Valor da Hospedagem: %.2f\n", calcularValorHospedagem()));
         sb.append(String.format("Estado da Reserva: %s\n", estado));
         sb.append(String.format("Servicos Adicionais\n"));
-        if(servicosAdicionais == null || servicosAdicionais.isEmpty()){
+        if (servicosAdicionais == null || servicosAdicionais.isEmpty()) {
             sb.append("- Sem servicos adicionais prestados.\n");
-        }else{
-            for(ServicoAdicional s : servicosAdicionais){
-                 sb.append(s.toString()).append("\n");
+        } else {
+            for (ServicoAdicional s : servicosAdicionais) {
+                sb.append(s.toString()).append("\n");
             }
         }
         sb.append(String.format("\nPagamentos\n"));
-        if(servicosAdicionais == null || servicosAdicionais.isEmpty()){
+        if (pagamentos == null || pagamentos.isEmpty()) {
             sb.append("- Sem pagamentos.\n");
-        }else{
-            for(Pagamento p : pagamentos){
-                 sb.append(p.toString()).append("\n");
+        } else {
+            for (Pagamento p : pagamentos) {
+                sb.append(p.toString()).append("\n");
             }
         }
         sb.append("========================================");
-        
-       
-        
+
         return sb.toString();
     }
 

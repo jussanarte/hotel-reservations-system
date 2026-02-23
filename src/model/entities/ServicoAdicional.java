@@ -27,9 +27,6 @@ public class ServicoAdicional implements Serializable {
         this.formaDeCobranca = formaDeCobranca;
     }
 
-    public ServicoAdicional() {
-    }
-
     //GETTERS
     public String getDescricao() {
         return descricao;

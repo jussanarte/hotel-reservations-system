@@ -4,6 +4,9 @@
  */
 package utils;
 
+import exceptions.DomainException;
+import java.time.LocalDate;
+
 /**
  *
  * @author juuhl
@@ -25,6 +28,14 @@ public class Validador {
     public static boolean validarDocumento(String documento) {
         return documento != null && (documento.matches("^[0-9]{9}[A-Z]{2}[0-9]{3}$") || documento.matches("^[A-Z]{1,2}[0-9]{6,9}$"));
     }
-
+    
+    public static void validarDatas(LocalDate checkIn, LocalDate checkOut) {
+        if ((checkOut.isBefore(checkIn)) || (checkOut.isEqual(checkIn))) {
+            throw new DomainException("Check-out deve ser maior que Check-in.");
+        }
+        if(checkOut.getYear() < LocalDate.now().getYear()  || checkOut.getYear() < LocalDate.now().getYear() ){
+              throw new DomainException("As reservas so podem ser efectuadas a partir do ano atual.");
+        }
+    }
     
 }

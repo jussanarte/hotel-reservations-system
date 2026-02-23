@@ -7,7 +7,6 @@ package app;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
-import java.util.Scanner;
 import model.entities.*;
 import service.*;
 import utils.Menus;
@@ -24,8 +23,6 @@ public class Main {
      * @throws java.lang.ClassNotFoundException
      */
     public static void main(String[] args) throws FileNotFoundException, ClassNotFoundException, IOException {
-        Scanner sc = new Scanner(System.in);
-
         final String fileNameCliente = "clientes.txt";
         final String fileNameQuarto = "quartos.txt";
         final String fileNameReserva = "reservas.txt";
@@ -56,10 +53,8 @@ public class Main {
         }
 
         //MENU INICIAL
-        Menus.executarMenuPrincipal(quartos, clientes, reservas);
-        SerializacaoService.gravar(fileNameQuarto, quartos);
-        SerializacaoService.gravar(fileNameCliente, clientes);
-        SerializacaoService.gravar(fileNameReserva, reservas);
+        Menus.executarMenuPrincipal(quartos, clientes, reservas, fileNameQuarto, fileNameReserva, fileNameCliente);
+        
 
     
 
