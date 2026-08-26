@@ -7,14 +7,12 @@
 *.war
 *.ear
 *.nar
-# Logs de erro da JVM
 hs_err_pid*
 replay_pid*
 
 ##############################
 ## Maven
 ##############################
-# Diretórios de saída e backups do Maven
 target/
 pom.xml.tag
 pom.xml.releaseBackup
@@ -30,7 +28,6 @@ buildNumber.properties
 ##############################
 ## Gradle
 ##############################
-# Diretórios de saída do Gradle
 bin/
 build/
 .gradle
@@ -41,7 +38,6 @@ gradle-app.setting
 ##############################
 ## IntelliJ
 ##############################
-# Arquivos de metadados e diretórios de saída
 out/
 .idea/
 .idea_modules/
@@ -52,15 +48,11 @@ out/
 ##############################
 ## Eclipse
 ##############################
-# Arquivos de metadados e diretórios de saída
 .settings/
-bin/
 tmp/
 .metadata
 .classpath
 .project
-
-# Arquivos temporários e de sessão do Eclipse
 *.tmp
 *.bak
 *.swp
@@ -70,47 +62,34 @@ local.properties
 .factorypath
 
 ##############################
-## NetBeans (CONSOLIDADO)
+## NetBeans
 ##############################
-# Arquivos de configurações e históricos internos (privados)
 **/nbproject/private/
-# Arquivos de propriedades que mudam o tempo todo (seja na raiz ou sub-módulos)
-nbproject/project.properties
-*.project.properties
-# Arquivos de configuração de ação e ambiente
+nbproject/build-impl.xml
 nbactions.xml
 nb-configuration.xml
-
-# Arquivos e diretórios de compilação/build
-**/build/
 **/dist/
 **/nbbuild/
 **/nbdist/
-**/build.xml
-**/manifest.mf
 
 ##############################
-## Visual Studio Code
+## VS Code
 ##############################
-# Pasta de configurações de workspace local
 .vscode/
 *.code-workspace
 
 ##############################
-## OS X
+## OS
 ##############################
 .DS_Store
 
 ##############################
-## Miscellaneous
+## Dados serializados
+##############################
+data/*.ser
+
+##############################
+## Logs e backups
 ##############################
 *.log
-# Arquivos de backup genéricos
 *~
-# Todos os outros arquivos .properties que não sejam project.properties
-nbproject/project.properties 
-# Exceção, garantindo que o anterior seja ignorado.
-*.properties
-/nbproject
-*.properties
-

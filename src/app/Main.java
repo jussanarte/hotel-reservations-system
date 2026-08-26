@@ -23,9 +23,9 @@ public class Main {
      * @throws java.lang.ClassNotFoundException
      */
     public static void main(String[] args) throws FileNotFoundException, ClassNotFoundException, IOException {
-        final String fileNameCliente = "clientes.txt";
-        final String fileNameQuarto = "quartos.txt";
-        final String fileNameReserva = "reservas.txt";
+        final String fileNameCliente = "data/clientes.ser";
+        final String fileNameQuarto = "data/quartos.ser";
+        final String fileNameReserva = "data/reservas.ser";
 
         //CARREGAMENTO DOS DADOS ANTERIORES
         List<Reserva> reservas = SerializacaoService.carregarFicheiros(fileNameReserva);
