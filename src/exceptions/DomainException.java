@@ -6,7 +6,7 @@ package exceptions;
 
 /**
  *
- * @author juuhl
+ * @author Isabel Marques, Jussana Paim, Norberto Cassoma, Oldmar Filindo
  */
 public class DomainException extends RuntimeException{
     public DomainException(String message) {

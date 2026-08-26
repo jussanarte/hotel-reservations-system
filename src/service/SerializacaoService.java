@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  *
- * @author norbe
+ * @author Isabel Marques, Jussana Paim, Norberto Cassoma, Oldmar Filindo
  */
 public class SerializacaoService {
     public static <T> void gravar(String file, List<T> lista) throws FileNotFoundException, IOException{

@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 /**
  *
- * @author juuhl
+ * @author Isabel Marques, Jussana Paim, Norberto Cassoma, Oldmar Filindo
  */
 
 public class Validador {
@@ -33,8 +33,8 @@ public class Validador {
         if ((checkOut.isBefore(checkIn)) || (checkOut.isEqual(checkIn))) {
             throw new DomainException("Check-out deve ser maior que Check-in.");
         }
-        if(checkOut.getYear() < LocalDate.now().getYear()  || checkOut.getYear() < LocalDate.now().getYear() ){
-              throw new DomainException("As reservas so podem ser efectuadas a partir do ano atual.");
+        if (checkIn.getYear() < LocalDate.now().getYear() || checkOut.getYear() < LocalDate.now().getYear()) {
+            throw new DomainException("As reservas so podem ser efectuadas a partir do ano atual.");
         }
     }
     

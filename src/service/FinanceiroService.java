@@ -12,7 +12,7 @@ import model.enums.EstadoPagamento;
 
 /**
  *
- * @author juuhl
+ * @author Isabel Marques, Jussana Paim, Norberto Cassoma, Oldmar Filindo
  */
 public class FinanceiroService {
 

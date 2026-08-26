@@ -14,7 +14,7 @@ import model.enums.MetodoPagamento;
 
 /**
  *
- * @author juuhl
+ * @author Isabel Marques, Jussana Paim, Norberto Cassoma, Oldmar Filindo
  */
 public class Pagamento implements Serializable {
 
@@ -66,14 +66,6 @@ public class Pagamento implements Serializable {
 
     public void setMetodo(MetodoPagamento metodo) {
         this.metodo = metodo;
-    }
-
-    public void confirmarPagamento() {
-        estado = EstadoPagamento.CONFIRMADO;
-    }
-
-    public void estornarPagamento() {
-        estado = EstadoPagamento.ESTORNADO;
     }
 
     @Override

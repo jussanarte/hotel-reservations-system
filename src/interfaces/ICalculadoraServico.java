@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 /**
  *
- * @author juuhl
+ * @author Isabel Marques, Jussana Paim, Norberto Cassoma, Oldmar Filindo
  */
 public interface ICalculadoraServico {
     BigDecimal calcular(BigDecimal precoUnitario, int quantidade, long noites);

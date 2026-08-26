@@ -9,7 +9,7 @@ import model.enums.TipoServico;
 
 /**
  *
- * @author juuhl
+ * @author Isabel Marques, Jussana Paim, Norberto Cassoma, Oldmar Filindo
  */
 public class ServicoAdicional implements Serializable {
 

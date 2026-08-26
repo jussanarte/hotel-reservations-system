@@ -6,7 +6,7 @@ package model.enums;
 
 /**
  *
- * @author juuhl
+ * @author Isabel Marques, Jussana Paim, Norberto Cassoma, Oldmar Filindo
  */
 public enum EstadoPagamento {
     PENDENTE,

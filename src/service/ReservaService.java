@@ -13,7 +13,7 @@ import model.enums.*;
 
 /**
  *
- * @author juuhl
+ * @author Isabel Marques, Jussana Paim, Norberto Cassoma, Oldmar Filindo
  */
 public class ReservaService {
 
@@ -21,7 +21,6 @@ public class ReservaService {
 
     public void confirmarReserva(Reserva r, List<Reserva> reservasConfirmadasExistentes) {
         
-        boolean haSobreposicao = verificarSobreposicaoDatas(r, reservasConfirmadasExistentes);
         boolean quartoIndisponivel = r.getQuarto().getEstado() != EstadoQuarto.ATIVO;
 
         BigDecimal saldo = fs.calcularSaldo(r);
@@ -30,9 +29,8 @@ public class ReservaService {
         if (quartoIndisponivel || saldoPositivo) {
             throw new DomainException("Reserva #" + r.getCodReserva() + " nao confirmada por quarto indisponivel ou saldo maior que 0");
         }
-        if (haSobreposicao) {
-            throw new DomainException("Reserva #" + r.getCodReserva() + " sobrepoe outra reserva existente");
-        }
+
+        verificarSobreposicaoDatas(r, reservasConfirmadasExistentes);
 
         r.setEstado(EstadoReserva.CONFIRMADA);
         reservasConfirmadasExistentes.add(r);
@@ -89,12 +87,11 @@ public class ReservaService {
         r.adicionarServico(s);
     }
 
-    public boolean verificarSobreposicaoDatas(Reserva r, List<Reserva> reservasConfirmadasExistentes) {
-        boolean sobreposto = false;
+    public void verificarSobreposicaoDatas(Reserva r, List<Reserva> reservasConfirmadasExistentes) {
         for (Reserva a : reservasConfirmadasExistentes) {
             if (a.getEstado() == EstadoReserva.CONFIRMADA || a.getEstado() == EstadoReserva.CHECKED_IN) {
                 if (a.getQuarto().getNumero().equals(r.getQuarto().getNumero())) {
-                    sobreposto = a.getCheckIn().isBefore(r.getCheckOut()) && r.getCheckIn().isBefore(a.getCheckOut());
+                    boolean sobreposto = a.getCheckIn().isBefore(r.getCheckOut()) && r.getCheckIn().isBefore(a.getCheckOut());
                     if (sobreposto) {
                         throw new DomainException(
                                 "Conflito de datas: o quarto " + r.getQuarto().getNumero()
@@ -106,6 +103,5 @@ public class ReservaService {
                 }
             }
         }
-        return sobreposto;
     }
 }

@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 /**
  *
- * @author juuhl
+ * @author Isabel Marques, Jussana Paim, Norberto Cassoma, Oldmar Filindo
  */
 public enum TipoQuarto {
     STANDARD(new BigDecimal("1.00")), 

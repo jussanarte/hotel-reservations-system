@@ -10,7 +10,7 @@ import utils.Validador;
 
 /**
  *
- * @author juuhl
+ * @author Isabel Marques, Jussana Paim, Norberto Cassoma, Oldmar Filindo
  */
 public class Cliente implements Serializable {
 
@@ -36,15 +36,19 @@ public class Cliente implements Serializable {
     public Cliente(String nomeCompleto, String telefone, String email, String documento) {
         if (Validador.validarNome(nomeCompleto)) {
             this.nomeCompleto = nomeCompleto;
+        } else {
+            throw new DomainException("Nome invalido!");
+        }
+        if (Validador.validarDocumento(documento)) {
+            this.documento = documento;
+        } else {
+            throw new DomainException("Documento invalido!");
         }
         if (Validador.validarTelemovel(telefone)) {
             this.telefone = telefone;
         }
         if (Validador.validarEmail(email)) {
             this.email = email;
-        }
-        if (Validador.validarDocumento(documento)) {
-            this.documento = documento;
         }
     }
 

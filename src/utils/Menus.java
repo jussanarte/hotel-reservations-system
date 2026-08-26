@@ -20,7 +20,7 @@ import service.SerializacaoService;
 
 /**
  *
- * @author juuhl
+ * @author Isabel Marques, Jussana Paim, Norberto Cassoma, Oldmar Filindo
  */
 public class Menus {
 
@@ -179,7 +179,6 @@ public class Menus {
 
     public static void executarMenuReservas(List<Quarto> quartos, List<Cliente> clientes, List<Reserva> reservas, String fileReservas) throws IOException {
         int opcao;
-        List<Reserva> reservasConfirmadasExistentes = new ArrayList();
         ReservaService rservice = new ReservaService();
         FinanceiroService fs = new FinanceiroService();
         Reserva r = null;
@@ -236,6 +235,9 @@ public class Menus {
                             System.out.print("Insira o numero do cliente: ");
                             numero = sc.nextInt();
 
+                            if (numero < 1 || numero > clientes.size()) {
+                                throw new DomainException("Numero de cliente invalido.");
+                            }
                             c = clientes.get(numero - 1);
 
                             r = new Reserva(checkin, checkout, qtdHospedes, q, c);
@@ -272,7 +274,13 @@ public class Menus {
                                 }
                             }
                             sc.nextLine();
-                            rservice.confirmarReserva(r, reservasConfirmadasExistentes);
+                            List<Reserva> confirmadas = new ArrayList<>();
+                            for (Reserva existing : reservas) {
+                                if (existing.getEstado() == EstadoReserva.CONFIRMADA || existing.getEstado() == EstadoReserva.CHECKED_IN) {
+                                    confirmadas.add(existing);
+                                }
+                            }
+                            rservice.confirmarReserva(r, confirmadas);
                         }
 
                     } catch (InputMismatchException | DomainException e) {
@@ -431,7 +439,7 @@ public class Menus {
                     return;
                 }
                 default -> {
-                    System.out.println("Opcao invalida. Tente novamente!");
+                    System.err.println("Opcao invalida. Tente novamente!");
                 }
 
             }

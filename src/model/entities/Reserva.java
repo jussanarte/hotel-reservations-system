@@ -18,7 +18,7 @@ import model.enums.EstadoReserva;
 
 /**
  *
- * @author juuhl
+ * @author Isabel Marques, Jussana Paim, Norberto Cassoma, Oldmar Filindo
  */
 public class Reserva implements Serializable {
 
@@ -120,14 +120,14 @@ public class Reserva implements Serializable {
 
     public void adicionarPagamento(Pagamento p) {
         if (p == null) {
-            throw new DomainException("Pagamento nao pode ser estar vazio.");
+            throw new DomainException("Pagamento nao pode estar vazio.");
         }
         this.pagamentos.add(p);
     }
 
     public void adicionarServico(ServicoAdicional s) {
         if (s == null) {
-            throw new DomainException("Servico nao pode ser estar vazio.");
+            throw new DomainException("Servico nao pode estar vazio.");
         }
         this.servicosAdicionais.add(s);
     }

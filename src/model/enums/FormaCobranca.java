@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 /**
  *
- * @author juuhl
+ * @author Isabel Marques, Jussana Paim, Norberto Cassoma, Oldmar Filindo
  */
 public enum FormaCobranca implements ICalculadoraServico{
     POR_NOITE{
@@ -30,8 +30,4 @@ public enum FormaCobranca implements ICalculadoraServico{
             return precoUnitario.multiply(BigDecimal.valueOf(qtd));
         }
     };
-    
-    public ICalculadoraServico getCalculadora(){
-        return this;
-    }
 }
